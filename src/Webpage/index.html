@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSP Configuration</title>
+
+    <style>
+        body {
+            font-family: helvetica;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Blue Star Planning</h1>
+    <h3>HMI Unit Configuration Menu</h3>
+    <form id="configForm">
+        Network SSID: <input type='text' name='inputSSID'><br><br>
+        Network Password: <input type='text' name='inputPassword'><br><br>
+        End-Point Address: <input type='text' name='inputAddress'
+            value='https://apidev.bluestarplanning.com/Planning/Queries/Production/HMIDevices/GetProductionHMIDeviceConfiguration'><br><br>
+        One-time Setup Token: <input type='text' name='inputToken'><br><br>
+        <input type='submit' value='Submit'>
+    </form><br><br>
+</body>
+
+<script>
+    configForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+
+        const json = Array.from(formData.entries()).reduce((memo, [key, value]) => ({
+            ...memo,
+            [key]: value,
+        }), {});
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/configData", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(json));
+    };
+
+</script>
+
+</html>
